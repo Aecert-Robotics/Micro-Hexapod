@@ -1,0 +1,10 @@
+Name,Unit,Expression,Value,Comments,Favorite
+HeatedInsertHole_Width,mm,3.4 mm,3.40,,false
+ScrewShaft_Diameter,mm,2 mm,2.00,,false
+ScrewHead_Diameter,mm,3.5 mm,3.50,,false
+ServoScrewShaft_Diameter,mm,2.1 mm,2.10,,false
+HeatedInsertMinWall_Thickness,mm,0.8 mm,0.80,,false
+GlobalChamfer,mm,0.6 mm,0.60,,false
+GlobalFillet,mm,5.7 mm,5.70,,false
+Tolerance_TightFit,mm,0.14 mm,0.14,,false
+Axle_Height,mm,4 mm,4.00,,false
