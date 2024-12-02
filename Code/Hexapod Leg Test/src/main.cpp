@@ -24,6 +24,8 @@ void moveToPosSmooth(Vector3 startPos, Vector3 endPos, int steps, int delayTime)
 int angleToMicroseconds(double angle);
 void ManualInput();
 void TraceASquare();
+float floatMap(float x, float in_min, float in_max, float out_min, float out_max);
+void MoveToPotHeight();
 
 void setup() {
   Serial.begin(9600);
@@ -39,7 +41,16 @@ void setup() {
 
 void loop() {
   //ManualInput();
-  TraceASquare();
+  //TraceASquare();
+  MoveToPotHeight();
+}
+
+
+void MoveToPotHeight() {
+  int potVal = analogRead(A10);
+  float z = floatMap(potVal, 0, 1023, -140, -10);
+  Vector3 pos = Vector3(0, 120, z);
+  moveToPos(pos);
 }
 
 void TraceASquare() {
@@ -120,4 +131,8 @@ void moveToPosSmooth(Vector3 startPos, Vector3 endPos, int steps, int delayTime)
     moveToPos(intermediatePos);
     delay(delayTime);
   }
+}
+
+float floatMap(float x, float in_min, float in_max, float out_min, float out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
