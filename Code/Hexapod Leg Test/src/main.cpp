@@ -1,6 +1,7 @@
 #include <Servo.h>
 #include "vectors.h"
 #include "Arduino.h"
+#include "NRF.h"
 
 #define COXA_PIN 29 
 #define FEMUR_PIN 30
@@ -17,8 +18,6 @@ float legLength = a1 + a2 + a3;
 //float offsets[3] = {90, 50, -10};
 float offsets[3] = {0, 50, 0};
 
-void setup();
-void loop();
 void moveToPos(Vector3 pos);
 void moveToPosSmooth(Vector3 startPos, Vector3 endPos, int steps, int delayTime);
 int angleToMicroseconds(double angle);
@@ -36,6 +35,9 @@ void setup() {
   Vector3 pos1 = Vector3(0, 0, 0);
   Vector3 pos2 = Vector3(0, a1 + a3, a2);
   moveToPosSmooth(pos1, pos2, 50, 20);
+
+  setupNRF();
+
   delay(1000);
 }
 
@@ -43,11 +45,17 @@ void loop() {
   //ManualInput();
   //TraceASquare();
   MoveToPotHeight();
+  recieveNRFData();
 }
 
 
 void MoveToPotHeight() {
   int potVal = analogRead(A10);
+
+  if(radio.available()){
+    potVal = floatMap(dataPackage.joy1_Y, 0, 256, 0, 1023);
+  }
+  
   float z = floatMap(potVal, 0, 1023, -140, -10);
   Vector3 pos = Vector3(0, 120, z);
   moveToPos(pos);
