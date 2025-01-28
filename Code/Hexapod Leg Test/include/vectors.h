@@ -123,6 +123,10 @@ public:
     return Vector3(x+val.x, y+val.y, z+val.z);
   }
 
+  Vector3 operator-(Vector3 val) {
+    return Vector3(x-val.x, y-val.y, z-val.z);
+  }
+
   String toString() {
     String xs = String(x);
     String ys = String(y);

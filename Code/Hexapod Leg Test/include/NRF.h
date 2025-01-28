@@ -1,39 +1,59 @@
 #pragma once
 
 #include <Arduino.h>
-#include <SPI.h>
-#include <RF24.h>
+#include "RF24.h" 
+#include "nRF24L01.h" 
 #include <vectors.h>
 
 extern RF24 radio;
 
 extern unsigned long rc_send_interval;
 
-struct Data_Package {
-    byte type; // 1 byte
-    
-    byte joy1_X; // 1 byte
-    byte joy1_Y; // 1 byte
-    
-    byte joy2_X; // 1 byte
-    byte joy2_Y; // 1 byte  
-    byte slider1; // 1 byte
-    byte slider2; // 1 byte
+// 32 Byte max
+struct RC_Data_Package {
+    byte joyLeft_X; // 1 byte
 
-    byte joy1_Button:1; // 1 bit
-    byte joy2_Button:1; // 1 bit
-    byte pushButton1:1; // 1 bit
-    byte pushButton2:1; // 1 bit
-    byte idle:1;        // 1 bit
-    byte sleep:1;        // 1 bit
-    byte dynamic_stride_length:1; // 1 bit
-    byte reserved : 1;  // 1 bits padding, 1 byte total
+    byte joyLeft_Y; // 1 byte
+    
+    byte joyRight_X; // 1 byte
+    
+    byte joyRight_Y; // 1 byte  
 
-    byte gait;  // 1 byte
+    byte potLeft; // 1 byte
+
+    byte potRight; // 1 byte 
+
+    //1 byte
+    byte button_A:1; // 1 bit
+    byte button_B:1; // 1 bit
+    byte button_C:1; // 1 bit
+    byte button_D:1; // 1 bit
+    byte toggle_A:1; // 1 bit
+    byte toggle_B:1; // 1 bit
+    byte toggle_C:1; // 1 bit
+    byte toggle_D:1; // 1 bit
+
+    //1 byte
+    byte bumper_A:1; // 1 bit
+    byte bumper_B:1; // 1 bit
+    byte bumper_C:1; // 1 bit
+    byte bumper_D:1; // 1 bit
+    byte joyLeft_Button:1; // 1 bit
+    byte joyRight_Button:1; // 1 bit
+    byte reserved : 2;  // 2 bits padding
+
 };
 
-extern Data_Package dataPackage;
+struct Ack_Data_Package {
+    byte connected:1; // 1 bit
+    byte reserved:7;  // 7 bits padding
+};
+
+extern RC_Data_Package dataPackage;
+extern Ack_Data_Package ackPackage;
 
 void setupNRF();
 void recieveNRFData();
 void RC_DisplayData();
+void sendAckData();
+void lostConnection();
