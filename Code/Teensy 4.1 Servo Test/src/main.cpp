@@ -1,15 +1,15 @@
-#include <Servo.h>
+#include <PWMServo.h>
 #include "vectors.h"
 #include "Arduino.h"
 #include "NRF.h"
 
-#define COXA_PIN 3
-#define FEMUR_PIN 5
-#define TIBIA_PIN 6
+#define COXA_PIN 10
+#define FEMUR_PIN 9
+#define TIBIA_PIN 8
 
-Servo coxaServo;
-Servo femurServo;
-Servo tibiaServo;
+PWMServo coxaServo;
+PWMServo femurServo;
+PWMServo tibiaServo;
 float a1 = 28.1;  // coxa length
 float a2 = 67.8;  // femur length
 float a3 = 117.5; // tibia length
@@ -32,9 +32,6 @@ void setup()
   femurServo.attach(FEMUR_PIN);
   tibiaServo.attach(TIBIA_PIN);
 
-  Vector3 pos1 = Vector3(0, 0, 0);
-  Vector3 pos2 = Vector3(0, a1 + a3, a2);
- 
   setupNRF();
 
   delay(100);
@@ -42,17 +39,17 @@ void setup()
 
 void loop()
 {
-  if (!dataPackage.toggle_A) moveToPos(calibrationPosition);
+  if (!rc_data.toggle_A) moveToPos(calibrationPosition);
   else JoystickMove();
 
-  recieveNRFData();
+  receiveNRFData();
 }
 
 void JoystickMove()
 {
-  int xVal = floatMap(dataPackage.joyLeft_X, 0, 256, 130, -130);
-  int yVal = floatMap(dataPackage.joyRight_Y, 0, 256, 150, 70);
-  int zVal = floatMap(dataPackage.joyLeft_Y, 0, 256, -110, 40);
+  int xVal = floatMap(rc_data.joyLeft_X, 0, 256, 130, -130);
+  int yVal = floatMap(rc_data.joyRight_Y, 0, 256, 150, 70);
+  int zVal = floatMap(rc_data.joyLeft_Y, 0, 256, -110, 40);
 
   targetPosition = Vector3(xVal, yVal, zVal);
   currentPosition = currentPosition + (targetPosition - currentPosition) * 0.02;
