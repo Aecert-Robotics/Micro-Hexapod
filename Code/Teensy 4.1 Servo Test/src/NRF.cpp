@@ -5,8 +5,8 @@ uint8_t address[6] = "HEX01";
 RC_Data_Package rc_data;
 Ack_Data_Package ack_data;
 
-#define CE_PIN 27
-#define CSN_PIN 28
+#define CE_PIN 26
+#define CSN_PIN 27
 #define INTERVAL_MS_SIGNAL_LOST 1000
 #define INTERVAL_MS_SIGNAL_RETRY 250
 RF24 radio(CE_PIN, CSN_PIN);
