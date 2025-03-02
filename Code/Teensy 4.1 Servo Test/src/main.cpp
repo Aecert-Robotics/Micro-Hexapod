@@ -5,9 +5,11 @@
 
 #define NUM_LEGS 6
 
-const int COXA_PINS[NUM_LEGS] = {10, 7, 4, 24, 29, 37};
+const int COXA_PINS[NUM_LEGS] = {8, 5, 2, 28, 36, 15};
 const int FEMUR_PINS[NUM_LEGS] = {9, 6, 3, 25, 33, 14};
-const int TIBIA_PINS[NUM_LEGS] = {8, 5, 2, 28, 36, 15};
+const int TIBIA_PINS[NUM_LEGS] = {10, 7, 4, 24, 29, 37};
+
+
 
 PWMServo coxaServos[NUM_LEGS];
 PWMServo femurServos[NUM_LEGS];
