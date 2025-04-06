@@ -5,19 +5,17 @@
 
 #define NUM_LEGS 6
 
-const int COXA_PINS[NUM_LEGS] = {8, 5, 2, 28, 36, 15};
-const int FEMUR_PINS[NUM_LEGS] = {9, 6, 3, 25, 33, 14};
-const int TIBIA_PINS[NUM_LEGS] = {10, 7, 4, 24, 29, 37};
-
-
+const int COXA_PINS[NUM_LEGS] = {10, 7, 4, 36, 28, 15};
+const int FEMUR_PINS[NUM_LEGS] = {9, 6, 3, 33, 25, 14};
+const int TIBIA_PINS[NUM_LEGS] = {8, 5, 2, 24, 37, 29};
 
 PWMServo coxaServos[NUM_LEGS];
 PWMServo femurServos[NUM_LEGS];
 PWMServo tibiaServos[NUM_LEGS];
 
-float a1 = 28.1;  // coxa length
-float a2 = 67.8;  // femur length
-float a3 = 117.5; // tibia length
+float a1 = 45;  // coxa length
+float a2 = 100;  // femur length
+float a3 = 175; // tibia length
 float legLength = a1 + a2 + a3;
 
 Vector3 calibrationPosition = Vector3(0, a1 + a3, a2);
@@ -66,9 +64,9 @@ void loop()
 
 void JoystickMove()
 {
-  int xVal = floatMap(rc_data.joyLeft_X, 0, 256, 130, -130);
-  int yVal = floatMap(rc_data.joyRight_Y, 0, 256, 150, 70);
-  int zVal = floatMap(rc_data.joyLeft_Y, 0, 256, -110, 40);
+  int xVal = floatMap(rc_data.joyLeft_X, 0, 256, 230, -230);
+  int yVal = floatMap(rc_data.joyRight_Y, 0, 256, 300, 160);
+  int zVal = floatMap(rc_data.joyLeft_Y, 0, 256, -200, 200);
 
   targetPosition = Vector3(xVal, yVal, zVal);
   currentPosition = currentPosition + (targetPosition - currentPosition) * 0.04;
@@ -108,8 +106,8 @@ void moveToPos(Vector3 pos)
   for (int i = 0; i < NUM_LEGS; i++)
   {
     coxaServos[i].write(180 - theta1);
-    femurServos[i].write(180 - theta2);
-    tibiaServos[i].write(theta3);
+    femurServos[i].write(theta2);
+    tibiaServos[i].write(180 - theta3);
   }
 
   // Serial.println("Theta1: " + String(theta1) + " Theta2: " + String(theta2) + " Theta3: " + String(theta3));
